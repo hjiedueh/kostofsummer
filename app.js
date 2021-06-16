@@ -59,7 +59,7 @@ app.use(passport.session());
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(express.static(path.join(__dirname, 'client','build')))
 // app.get('*', (req, res) => {
 //   res.sendFile(path.join(__dirname + '/client/build/', 'index.html'))
 // })
@@ -79,6 +79,10 @@ const connect = mongoose.connect(url, { useNewUrlParser: true });
 connect.then((db) => {
   console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(PORT, () => {
 	console.log(`Server up and running on port ${PORT}`);
