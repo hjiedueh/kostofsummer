@@ -34,13 +34,20 @@ const Header = () => {
                             <a href="/cart" className="cart-num">{cartNum}</a>
                         }
                     </div>
-                    <Navbar.Collapse id="navbarTogglerDemo03" className='header-nav'>
+                    <Navbar.Collapse id="navbarTogglerDemo03" className='header-nav' expanded='false'>
                         <Nav className="mr-auto">
-                            <Nav.Link href="#features">MEN</Nav.Link>
+                            <Nav.Link href="#features">MAN</Nav.Link>
                             <Nav.Link href="#pricing">WOMAN</Nav.Link>
                             <Nav.Link href="#pricing">CHILD</Nav.Link>
                             <Nav.Link href="#pricing">ACCESSORIES</Nav.Link>
                         </Nav>
+                        <div className='nav-right-large ms-5'>
+                            {!cart ?
+                                <a href="/cart" className="cart-num">00</a>
+                                :
+                                <a href="/cart" className="cart-num">{cartNum}</a>
+                            }
+                        </div>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

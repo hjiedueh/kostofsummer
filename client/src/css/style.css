@@ -1,3 +1,5 @@
+/* @import "../../node_modules/bootstrap/scss/bootstrap"; */
+
 *{
     overflow-x: hidden;
 }
@@ -42,6 +44,18 @@ body {
 .navbar-brand {
     margin-right: 0 !important;
     padding: 0 !important;
+}
+
+.nav-right {
+    display: inline;
+}
+
+.nav-right-large {
+    display: none;
+}
+
+.lg-menu {
+    display: none;
 }
 
 .cart-num {
@@ -373,7 +387,12 @@ button.close {
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
     .header-nav {
+        display: none !important;
         margin-left: 1rem;
+    }
+
+    .lg-menu {
+        display: flex;
     }
 
     .cart-page-header {
@@ -381,7 +400,18 @@ button.close {
         margin-top: 1rem;
     }
 
+    .nav-right {
+        display: none;
+    }
+    .nav-right-large {
+        display: inline;
+    }
+
     .checkout-con {
         margin: 0 3rem;
+    }
+
+    .recent-img, .product-image {
+        padding: 5rem;
     }
 }

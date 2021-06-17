@@ -23,7 +23,7 @@ export const CheckoutPage = () => {
     const price = (cart.total/100).toFixed(2)
     const shipping = 10.00
     const ot = toPrice(price)
-    const total = (ot + shipping).toFixed(2)
+    const total = (ot).toFixed(2)
 
     const [sdkReady, setSdkReady] = useState(false)
 
@@ -78,6 +78,7 @@ export const CheckoutPage = () => {
     }
     return (
         <Container fluid className='my-5 text-center checkout-con' style={{padding: '0px'}}>
+            <Row><p style={{textTransform:'uppercase'}}>Order Summary</p></Row>
             <Row>
                 <Col md={12} lg={12} style={{padding: '0px'}}>
                     <div className='checkout-wrapper'>
@@ -91,6 +92,7 @@ export const CheckoutPage = () => {
                                 <Col md={4} lg={4} className="mt-2 cart-desc">
                                     <p>{item.name}</p>
                                     <p>{item.size}</p>
+                                    <p>{item.qty}</p>
                                 </Col>
                                 <Col md={2} lg={2} className="mt-2 ">
                                     <p className="text-center">{(item.price/100).toFixed(2)}</p>
@@ -110,9 +112,15 @@ export const CheckoutPage = () => {
                             <br />
                             <strong>Phone: </strong>{cart.shippingInfo.phone} <Link to='/shipping' className='mx-2'>Change</Link>  
                         </div>
-                        <div className='m-2'>
-                            <strong>Shipping: </strong> {cart.shippingInfo.fullname} <br />
-                            {cart.shippingInfo.address}, {cart.shippingInfo.city}, {cart.shippingInfo.postal}, {cart.shippingInfo.country} <Link to='/shipping' className='mx-2'>Change</Link> 
+                        <div className='m-2 text-center'>
+                            <strong>Shipping: </strong> <br /> 
+                            {cart.shippingInfo.fullname} <br />
+                            {cart.shippingInfo.address} <br />
+                            {cart.shippingInfo.address2} <br />  
+                            {cart.shippingInfo.city}, 
+                            {cart.shippingInfo.postal}, 
+                            {cart.shippingInfo.country} 
+                            <Link to='/shipping' className='mx-2'>Change</Link> 
                         </div>
                         <div className='m-2'>
                             <strong>Payment Method: </strong>{cart.paymentMethod} <Link to='/paymentmethod' className='mx-2'>Change</Link> 
@@ -121,9 +129,7 @@ export const CheckoutPage = () => {
                     <div className='mt-5' style={{border: '0px'}}>
                         <div className='m-2'>
                             <div className='order-summ mb-3'>
-                                <p>Order Summary</p>
                                 <span><strong>Subtotal: </strong></span><span className='order-page-subtotal'>${price}</span> <br />
-                                <span><strong>Shipping: </strong></span><span>${shipping}.00</span><br />
                                 <strong className='mb-5'>Order Total: </strong><span>${total}</span> <br />
                             </div>
                             {!sdkReady ? (

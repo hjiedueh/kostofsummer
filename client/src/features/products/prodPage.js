@@ -3,9 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { selectItemsById, fetchItems } from './prodSlice'
 import { itemAdded } from '../cart/cartSlice'
-import { Link } from 'react-router-dom'
 import Image from 'react-bootstrap/Image'
-import Modal from 'react-bootstrap/Modal'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import {Video} from '../../comps/video'
@@ -55,10 +53,6 @@ const ProdDetails = (item) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [show, setShow] = useState(false)
-    const handleShow = () => setShow(true);
-    const handleClose = () => setShow(false);
-
     const [qty, setQty] = useState(1)
 
     const [size, setSize] = useState(null)
@@ -93,9 +87,15 @@ const ProdDetails = (item) => {
             console.error('Failed to add item to cart: ', err)
             history.block()
         } finally {
-            history.push('/cart')
+            document.getElementById('add-to-btn').style.display= 'none'
+            document.getElementById('cart-btn').style.display= 'inline-block'
+            // history.push('/cart')
             // history.block()
         }
+    }
+
+    const handleProceedToCart = () => {
+        history.push('/cart')
     }
 
     // const handleDesc = (itemDesc) => {
@@ -141,7 +141,8 @@ const ProdDetails = (item) => {
             <div className="info-col info-col-2">
                 <div className="bag-wrapper">
                     <div className="d-grid gap-2 add-to">
-                        <Button className="btn btn-dark add-to-btn" type="button" onClick={()=>{handleAddToCart(qty, size)}}>add to bag</Button>
+                        <Button className="btn btn-dark add-to-btn" id='add-to-btn' type="button" onClick={()=>{handleAddToCart(qty, size)}}>add to bag</Button>
+                        <Button className="btn btn-dark add-to-btn" id='cart-btn' type="button" style={{display: 'none'}} onClick={()=>{handleProceedToCart()}}>proceed to cart</Button>
                     </div>
                 </div>
                 <div className="size-guide-wrapper mt-3 mb-3">

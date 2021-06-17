@@ -13,6 +13,8 @@ const validation = Yup.object().shape({
     .required('Required'),
     address: Yup.string()
     .required('Required'),
+    address2: Yup.string()
+    .required('Required'),
     city: Yup.string()
     .required('Required'),
     postal: Yup.number()
@@ -40,6 +42,7 @@ const ShippingPage = () => {
     const initialValues = {
         full_name: shippingAddress.fullname,
         address: shippingAddress.address,
+        address2: shippingAddress.address,
         city: shippingAddress.city,
         postal: shippingAddress.postal,
         country: shippingAddress.country,
@@ -48,7 +51,7 @@ const ShippingPage = () => {
     }
 
     const handleShipping = async (values) => {
-        const address = {fullname: values.full_name, address: values.address, city: values.city, postal: values.postal, country: values.country, email: values.email, phone: values.phone}
+        const address = {fullname: values.full_name, address: values.address, address2: values.address2, city: values.city, postal: values.postal, country: values.country, email: values.email, phone: values.phone}
         try {
             dispatch(shippingAddressAdded(address))
         } catch (err) {
@@ -76,6 +79,11 @@ const ShippingPage = () => {
                         <Fields.MyTextInput
                             label="Address"
                             name="address"
+                            type="text"
+                        />
+                        <Fields.MyTextInput
+                            label="Address 2"
+                            name="address2"
                             type="text"
                         />
                         <Fields.MyTextInput
