@@ -8,7 +8,7 @@ import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button'
 import { useSelector, useDispatch } from "react-redux";
 // import { CheckoutSteps } from "./checkoutSteps";
-import { itemRemoved, addOrder, qtyIncreased, qtyDecreased } from './cartSlice'
+import { itemRemoved, addOrder } from './cartSlice'
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 import { generateRandomCharacters } from "../../app/randomGen";

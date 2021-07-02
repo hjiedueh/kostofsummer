@@ -208,6 +208,11 @@ body {
 
 }
 
+.size-war {
+    color: red !important;
+    display: none;
+}
+
 .quantity-wrapper p {
     display: inline;
 }
@@ -367,6 +372,9 @@ button.close {
     width: 100%;
 }
 
+.other-img {
+    width: 100%;
+}
 .comp-text-link {
     text-decoration: underline;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
@@ -14,7 +14,6 @@ import {
     selectItemIds,
     selectItemsById
 } from '../products/prodSlice'
-import Hoodie from '../../img/hoodie-front.webp'
 
 
 
@@ -23,8 +22,6 @@ const CartItem = (item) => {
     const dispatch = useDispatch()
     const price = (item.item.price/100).toFixed(2)
     const total = (item.item.total/100).toFixed(2)
-
-    const [size, setSize] = useState(null)
 
     const handleRemoveItem = async (item) => {
         try {
@@ -101,12 +98,11 @@ const CartItem = (item) => {
 }
 
 const OtherItem = (itemId) => {
-    const item = useSelector(state => selectItemsById(state, itemId))
-    console.log(item)
+    const item = useSelector(state => selectItemsById(state, itemId.itemId))
     return (
         <Col>
-            <Link to={`/items/${item.item.id}`}>
-                <Image src={`/items/${item.item.image}`} className="other-img text-center"/>
+            <Link to={`/items/${item._id}`}>
+                <Image src={`/items/${item.picture}`} className="other-img text-center"/>
             </Link>
         </Col>
     )
@@ -114,40 +110,20 @@ const OtherItem = (itemId) => {
 
 export const CartPage = () => {
     const cart = useSelector(state => state.cart)
-    const items = useSelector(state => state.items)
     const history =  useHistory()
     const dispatch = useDispatch()
     
 
     const itemStatus = useSelector(state => state.items.status)
     const orderedItemIds = useSelector(selectItemIds)
-    const error = useSelector(state => state.items.error)
 
-    let others = orderedItemIds.filter(val => !cart.ids.includes(val))
-    console.log(others)
-
-    
+    let others = orderedItemIds.filter(val => !cart.ids.includes(val))    
 
     useEffect(() => {
         if (itemStatus === 'idle') {
             dispatch(fetchItems())
         }
     }, [itemStatus, dispatch])
-
-    let itemContent
-
-    // if (itemStatus === 'loading') {
-    //     itemContent = <div className='loader'>Loading...</div>
-    // } else if (itemStatus === 'succeeded') {
-    //     itemContent = 
-    //         <Row className='other-row'>
-    //             {others.map(itemId => (
-    //                 <OtherItem itemId={itemId} key={itemId} />
-    //             ))}
-    //         </Row>
-    // } else if (itemStatus === 'error') {
-    //     itemContent = <div>{error}</div>
-    // }
     
 
     const content = cart.cart.map(item => (
@@ -187,7 +163,9 @@ export const CartPage = () => {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey="0">
                             <Row className='add-more-wrapper'>
-                                {/* {itemContent} */}
+                            {others.map(itemId => (
+                                <OtherItem itemId={itemId} key={itemId} />
+                            ))} 
                             </Row>
                         </Accordion.Collapse>
                     </Accordion>

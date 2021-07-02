@@ -48,7 +48,6 @@ const cartSlice = createSlice({
                 
             } else {
                 state.cart.push(action.payload)
-                // console.log(action.payload)
                 state.total = state.total + action.payload.total
                 state.totalQty = state.totalQty + action.payload.qty
                 localStorage.setItem('cartItems', JSON.stringify(state.cart))
@@ -66,6 +65,7 @@ const cartSlice = createSlice({
             localStorage.setItem('cartItems', JSON.stringify(state.cart))
             localStorage.setItem('total', JSON.stringify(state.total))
             localStorage.setItem('totalQty', JSON.stringify(state.totalQty))
+            cartAdapter.removeOne(state, id.payload)
         },
         shippingAddressAdded(state, action) {
             state.shippingInfo = action.payload
@@ -103,7 +103,6 @@ const cartSlice = createSlice({
             localStorage.setItem('totalQty', JSON.stringify(state.totalQty))
         },
         sizeChange(state, action) {
-            console.log(action.payload)
             const found = state.cart.find(item => action.payload.item === item.id)
             found.size = action.payload.value
             localStorage.setItem('cartItems', JSON.stringify(state.cart))
@@ -116,7 +115,6 @@ const cartSlice = createSlice({
         [addOrder.fulfilled]: (state, action) => {
             state.status = 'succeeded'
             state.orderIds.push(action.payload.order._id)
-            console.log(state.orderIds)
             localStorage.setItem('orderIds', JSON.stringify(state.orderIds))
             localStorage.removeItem('totalQty')
             // state.cart = localStorage.removeItem('cartItems')

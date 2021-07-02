@@ -17,38 +17,6 @@ const Product = (item) => {
     )
 }
 
-// const ProdThumbs = () => {
-//     return (
-//         <ul className='prod-thumbs'>
-//             <li className="prod-thumb">
-//                 <Image src={model} className="thumb-img" />
-//             </li>
-//             <li className="prod-thumb">
-//                 <Image src={model} className="thumb-img" />
-//             </li>
-//             <li className="prod-thumb">
-//                 <Image src={model} className="thumb-img" />
-//             </li>
-//             <li className="prod-thumb">
-//                 <Image src={model} className="thumb-img" />
-//             </li>
-//         </ul>
-//     )
-// }
-
-// const Composition = (itemDescription) => {
-//     const [show, setShow] = useState(false)
-//     const handleClose = () => setShow(false);
-
-//     return (
-//         <Modal show={show} onHide={handleClose}>
-//             <Modal.Header closeButton>
-//             </Modal.Header>
-//             <Modal.Body>{itemDescription}</Modal.Body>
-//         </Modal>
-//     )
-// }
-
 const ProdDetails = (item) => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -72,26 +40,34 @@ const ProdDetails = (item) => {
     }
 
     const handleSize = (value) => {
+        if (document.getElementById('size-war').style.display !== 'none') {
+            document.getElementById('size-war').style.display = 'none'
+        }
         setSize(value)
     }
 
     const handleAddToCart = async (qty, size) => {
         let total = item.item.price * qty
-        const piece = {id: item.item._id, name: item.item.name, size: size, price: item.item.price, qty: qty, image: item.item.picture, total: total}
-        try {
-            dispatch(itemAdded(piece))
-            // const resultAction = await dispatch()
-            // console.log(resultAction)
-            // unwrapResult(resultAction)
-        } catch (err) {
-            console.error('Failed to add item to cart: ', err)
-            history.block()
-        } finally {
-            document.getElementById('add-to-btn').style.display= 'none'
-            document.getElementById('cart-btn').style.display= 'inline-block'
-            // history.push('/cart')
-            // history.block()
+        if (size === null) {
+            document.getElementById('size-war').style.display = 'block'
+        } else {
+            const piece = {id: item.item._id, name: item.item.name, size: size, price: item.item.price, qty: qty, image: item.item.picture, total: total}
+            try {
+                dispatch(itemAdded(piece))
+                // const resultAction = await dispatch()
+                // console.log(resultAction)
+                // unwrapResult(resultAction)
+            } catch (err) {
+                console.error('Failed to add item to cart: ', err)
+                history.block()
+            } finally {
+                document.getElementById('add-to-btn').style.display= 'none'
+                document.getElementById('cart-btn').style.display= 'inline-block'
+                // history.push('/cart')
+                // history.block()
+            }
         }
+        
     }
 
     const handleProceedToCart = () => {
@@ -129,6 +105,7 @@ const ProdDetails = (item) => {
                         <Button className='size btn ' value='l' as='p' onClick={()=>{handleSize('l')}}>l</Button>
                         <Button className='size btn ' value='xl' as='p' onClick={()=>{handleSize('xl')}}>xl</Button>
                         <Button className='size btn ' value='xxl' as='p' onClick={()=>{handleSize('xxl')}}>xxl</Button>
+                        <p className='size-war' id='size-war'>please select size</p>
                     </div>
                     <div className='quantity-wrapper mt-1'>
                         <p className='qty-dec' onClick={()=>{handleQtyDecreased(item.item.id)}}>-</p>
